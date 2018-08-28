@@ -16,24 +16,6 @@ PORT = settings.PORT
 os.environ['MPLCONFIGDIR'] = APP_DIR
 
 
-"""
-chat handler
-
-participants = set()
-
-def handle(ws):
-    participants.add(ws)
-    try:
-        while True:
-            m = ws.wait()
-            if m is None:
-                break
-            for p in participants:
-                p.send(m)
-    finally:
-        participants.remove(ws)
-                  
-"""
 BOOTSTRAP_LIST = [
     "import matplotlib",
     "matplotlib.use('SVG')",
