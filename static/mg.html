@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>Mind Glass (Demo)</title>
+        <link rel="stylesheet" type="text/css" href="/static/resources/css/ext-all.css">
+        <style type="text/css">
+            .cmd-window div input {
+                font-family : monospace;
+            }
+        </style>
+        <script type="text/javascript" src="/static/ext-all-debug.js"></script>
+        <!-- Disabled for now 
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript" src="chat.js"></script>
+        -->
+        <script type="text/javascript" src="/static/mg.js"></script>
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                Ext.QuickTips.init();
+                var mgvp = Ext.create('Ext.container.Viewport', {
+		            id : 'mg-viewport',
+                    layout: 'border',
+                    padding: '2 2 2 2',
+	                listeners : {
+                        afterrender : function(vp) {
+                            // make request with any session currently stored.
+                            Ext.Ajax.request({
+                                url : 'auth/',
+                                params : {
+                                   user : '', 
+                                   passwd : ''
+                                },
+                                success : function(r) {
+                                    vp.add([tree, command, grid]);
+                                    grid.getStore().load();
+                                    tree.getStore().load();
+                                },
+                                failure : function(r) {
+                                    if(!login_window.has_been_shown){
+                                        login_window.show();
+                                    }
+                                    else{
+                                        vp.add([tree, command, grid]);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    });
+            });
+        </script>
+	</head>
+	<body>
+	</body>
+</html>
